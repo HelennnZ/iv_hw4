@@ -1,7 +1,7 @@
-import React from 'react';
-import XAxis from './XAxis';
-import YAxis from './YAxis';
-import Points from './Points';
+// import React from 'react';
+// import XAxis from './XAxis';
+// import YAxis from './YAxis';
+// import Points from './Points';
 
 function ScatterPlot(props){
     const { offsetX, offsetY, data, xScale, yScale, height, width } = props;
