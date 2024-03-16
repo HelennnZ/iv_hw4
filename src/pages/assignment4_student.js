@@ -20,7 +20,7 @@ function useData(csvPath){
                 d.end = +d.end;
                 d.tripdurationE = +d.tripdurationE;
             });
-            setData(data);
+            setData(data);np
         });
     }, []);
     return dataAll;
