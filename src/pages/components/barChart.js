@@ -9,7 +9,7 @@ function BarChart(props){
 
     return <g transform = {`translate(${offsetX}, ${offsetY})`}>
         <Bars data={data} xScale={xScale} yScale={yScale} height={height} selectedStation = {selectedStation} setSelectedStation = {setSelectedStation}/>
-        <YAxis yScale={yScale} width={width} axisLable={"Bikers start from"}/>
+        <YAxis xScale={xScale} yScale={yScale} width={width} axisLable={"Bikers start from"}/>
         <XAxis xScale={xScale} height={height} width={width} />
         </g>
 }

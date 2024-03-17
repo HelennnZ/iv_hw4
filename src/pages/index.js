@@ -1,6 +1,3 @@
-// index.js: Main page for the Next.js app showcasing a scatter plot visualization
-// Author: Mingyuan Yue
-// Creation Date: 2024-03-13
 
 import Head from "next/head";
 import Image from "next/image";

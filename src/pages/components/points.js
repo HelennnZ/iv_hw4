@@ -27,7 +27,7 @@ function Points(props) {
 
     if (data) {
         return (<g>
-            {selectedStation && (<rect x = {0} y = {0} width="100%" height="100%" fill="yellow" fillOpacity={0.3} />)}
+            {selectedStation && (<rect x = {0} y = {0} width="88%" height="90%" fill="yellow" fillOpacity={0.3} />)}
             {data.map((d, index) => {
                 const isSelected = d.station === selectedStation;
                 // If the station is the selected one, we'll render it later to bring it in front

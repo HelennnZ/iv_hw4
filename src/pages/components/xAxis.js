@@ -37,7 +37,7 @@ function XAxis(props) {
                 <text 
                     x={width / 2} 
                     y={isLinear? 30 : 50} // Adjust this value based on your margin
-                    textAnchor="middle">
+                    textAnchor="end">
                     {axisLabel}
                 </text>
             )}
