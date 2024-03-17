@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import * as d3 from "d3"
 import 'bootstrap/dist/css/bootstrap.css'
 import { Row, Col, Container} from 'react-bootstrap'
@@ -20,7 +20,7 @@ function useData(csvPath){
                 d.end = +d.end;
                 d.tripdurationE = +d.tripdurationE;
             });
-            setData(data);np
+            setData(data);
         });
     }, []);
     return dataAll;
@@ -28,8 +28,14 @@ function useData(csvPath){
 
 const Charts = () => {
     const [month, setMonth] = React.useState('4');
+    
     //Q1.5 define hooks to link the points and bars
     //Notes: you should define the hooks at the beginning of the component; a hook cannot be defined after the if ... else... statement;
+    const [selectedStation, setSelectedStation] = useState(null);
+
+    const [tooltipData, setTooltipData] = useState(null);
+    const [tooltipX, setTooltipX] = useState(null);
+    const [tooltipY, setTooltipY] = useState(null);
    
     const dataAll = useData(csvUrl);
     if (!dataAll) {
@@ -58,8 +64,14 @@ const Charts = () => {
 
 //Q1.2: Complete the xScaleBar and yScaleBar
 //Hint: use d3.scaleBand for xScaleBar
-    const xScaleBar = []
-    const yScaleBar = []
+    const xScaleBar = d3.scaleBand()
+        .domain(data.map(d => d.station)) 
+        .range([0, innerWidth]) 
+        .padding(0.1); 
+    const yScaleBar = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.start)]) // Replace 'd.value' with the actual property name for values
+        .range([innerHeightBar, 0]) 
+        .nice();
 
     const changeHandler = (event) => {
         setMonth(event.target.value);
@@ -77,13 +89,15 @@ const Charts = () => {
                 <Col>
                     <svg width={WIDTH} height={HEIGHT}>
                         <ScatterPlot offsetX={margin.left} offsetY={margin.top} data={data} xScale={xScaleScatter} yScale={yScaleScatter} 
-                        height={innerHeightScatter} width={innerWidth}/>
+                        height={innerHeightScatter} width={innerWidth} selectedStation = {selectedStation} setSelectedStation={setSelectedStation} setTooltipData={setTooltipData}
+                        setTooltipX={setTooltipX}
+                        setTooltipY={setTooltipY}/>
                     </svg>
                 </Col>
                 <Col>
                     <svg width={WIDTH} height={HEIGHT}>
                         <BarChart offsetX={margin.left} offsetY={margin.top} data={data} xScale={xScaleBar} 
-                        yScale={yScaleBar} height={innerHeightBar} width={innerWidth}/>
+                        yScale={yScaleBar} height={innerHeightBar} width={innerWidth} selectedStation = {selectedStation} setSelectedStation = {setSelectedStation}/>
                     </svg>
                 </Col>
             </Row>
@@ -92,6 +106,10 @@ const Charts = () => {
             2. you should define the hooks for X and Y coordinates of the tooltip; 
             3. to get the position of the mouse event, you can use event.pageX and event.pageY;
             */}
+             {/* Tooltip component outside of SVG */}
+             {tooltipData && (
+                <Tooltip d={tooltipData} x={tooltipX} y={tooltipY} />
+            )}
         </Container>
     )   
 }

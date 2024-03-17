@@ -1,16 +1,46 @@
 
+import React, { useState } from 'react';
+
+// function getColor(selectedStation, station) {
+//     return station === selectedStation ? 'red' : 'steelblue';
+//   }
 
 function Bars(props) {
-    const {data, xScale, yScale, height} = props;
+    const {data, xScale, yScale, height, selectedStation, setSelectedStation} = props;
+    
+    const getColor = (station) => station === selectedStation ? 'red' : 'steelblue'
 
-    //Note: 
-    //the if(data){...} means when data is not null, the component will return the bars; otherwise, it returns <g></g>
-    //we use the if ... else ... in this place so that the code can work with the SSR in Next.js;
+    // const [hoveredStation, setHoveredStation] = useState(null);
+
+    const handleMouseEnter = (station) => {
+        if (typeof setSelectedStation == 'function'){
+            setSelectedStation(station);
+        }  
+    };
+
+    const handleMouseOut = () => {
+        if (typeof setSelectedStation == 'function'){
+            setSelectedStation(null);
+        }  
+    };
+
+
     if(data){
         return <g>
-            {/* {task:
-                    1. remove this comments and put your code here
-                    2. pay attention to the height of the bars, it should be height-yScale(d.start)} */}
+            {data.map((d, i) => (
+                    <rect
+                        key={i}
+                        x={xScale(d.station)} 
+                        y={yScale(d.start)} 
+                        width={xScale.bandwidth()} 
+                        height={height - yScale(d.start)} 
+                        fill = {getColor(d.station)}
+                        // fill="steelblue" 
+                        stroke = "black"
+                        onMouseEnter={() => handleMouseEnter(d.station)}
+                        onMouseOut={handleMouseOut}
+                    />
+                ))}
             </g>
     } else {
         return <g></g>

@@ -1,23 +1,35 @@
-
-
+import React, { useRef, useEffect } from 'react';
+import * as d3 from 'd3';
 
 function YAxis(props){
-    const { yScale, height, axisLable } = props;
-    if(yScale){
-        return <g>
-            
-        {/* //the if(yScale){...} means when xScale is not null, the component will return the y-axis; otherwise, it returns <g></g>
-        //we use the if ... else ... in this place so that the code can work with the SSR in Next.js;
-        //all your code should be put in this block. Remember to use typeof check if the xScale is linear or discrete. */}
-   
-            <text style={{ textAnchor:'end', fontSize:'15px'}} transform={`translate(20, 0)rotate(-90)`}>
-                {axisLable}
-            </text>
-        </g>
-    } else {
-        return <g></g>
-    }
+    const { yScale, height, axisLabel } = props;
+    const yAxisRef = useRef();
 
+    useEffect(() => {
+    if(yScale){
+    
+        const yAxis = d3.axisLeft(yScale);
+
+            // Render the axis inside the g element using D3
+        d3.select(yAxisRef.current).call(yAxis);
+        }
+    }, [yScale]);
+
+
+    return (
+        <g ref={yAxisRef} className="y-axis">
+            {/* Conditional rendering of axis label */}
+            {axisLabel && (
+                <text
+                    style={{ textAnchor: 'end', fontSize: '15px' }}
+                    transform={`translate(-20, ${height / 2}) rotate(-90)`}
+                >
+                    {axisLabel}
+                </text>
+            )}
+        </g>
+    );
 }
+
 
 export default YAxis
