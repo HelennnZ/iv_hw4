@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <Head>
         <title>Citi Bike Visualization</title>
-        <meta name="description" content="Visualization of Citi Bike usage using D3 and React with Next.js" />
+        <meta name="description" content="InfoViz_hw4_Helen" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
